@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Runtime.CompilerServices;
+using TaskManager.Application.Services;
 using TaskManager.DataAccess;
+using TaskManager.DataAccess.Repositories;
 
 namespace TaskManager
 {
@@ -23,6 +26,9 @@ namespace TaskManager
                         .Configuration
                         .GetConnectionString(nameof(TaskManagerDbContext)));
                 });
+
+            builder.Services.AddScoped<ITasksService, TasksService>();
+            builder.Services.AddScoped<ITasksRepository, TasksRepository>();
 
             var app = builder.Build();
 
