@@ -1,4 +1,5 @@
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TaskManager.DataAccess;
 
 namespace TaskManager
@@ -13,13 +14,21 @@ namespace TaskManager
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<TaskDbContext>();
+
+            //builder.Services.AddScoped<TaskDbContext>();
+            builder.Services.AddDbContext<TaskManagerDbContext>(
+                options =>
+                {
+                    options.UseNpgsql(builder
+                        .Configuration
+                        .GetConnectionString(nameof(TaskManagerDbContext)));
+                });
 
             var app = builder.Build();
 
-            using var scope = app.Services.CreateScope();
-             using var dbContext = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
-             dbContext.Database.EnsureCreatedAsync();
+            //using var scope = app.Services.CreateScope();
+            // using var dbContext = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
+            // dbContext.Database.EnsureCreatedAsync();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
