@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System.Runtime.CompilerServices;
 using TaskManager.Application.Services;
 using TaskManager.DataAccess;
 using TaskManager.DataAccess.Repositories;
