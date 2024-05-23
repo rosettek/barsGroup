@@ -5,7 +5,7 @@ namespace TaskManager
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static  void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +17,9 @@ namespace TaskManager
 
             var app = builder.Build();
 
+            using var scope = app.Services.CreateScope();
+             using var dbContext = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
+             dbContext.Database.EnsureCreatedAsync();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
