@@ -16,19 +16,19 @@ namespace TaskManager.Application.Services
             return await _taskRepositories.Get();
         }
 
-        public async Task<Guid> CreateBook(Domain.Models.Task task)
+        public async Task<Guid> CreateTask(Domain.Models.Task task)
         {
             return await _taskRepositories.Create(task);
         }
 
-        public async Task<Guid> UpdateBook(Guid id, string title, string tittle,
+        public async Task<Guid> UpdateTask(Guid id, string title, string tittle,
                                            string description, DateTime deadline, bool taskStatus)
         {
             return await _taskRepositories.Update(id, title, tittle,
                                                   description, deadline, taskStatus);
         }
 
-        public async Task<Guid> DeleteBook(Guid id)
+        public async Task<Guid> DeleteTask(Guid id)
         {
             return await _taskRepositories.Delete(id);
         }
