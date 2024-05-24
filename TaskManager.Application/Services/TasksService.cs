@@ -13,7 +13,14 @@ namespace TaskManager.Application.Services
 
         public async Task<List<Domain.Models.Task>> GetAllTasks()
         {
-            return await _taskRepositories.Get();
+            var tasks = await _taskRepositories.Get();
+            return tasks.Where(task => task.IsDeleted == false).ToList();
+        }
+
+        public async Task<List<Domain.Models.Task>> GetTask(Guid id)
+        {
+            var task = await _taskRepositories.Get(id);
+            return task.Where(task => task.IsDeleted == false).ToList();
         }
 
         public async Task<Guid> CreateTask(Domain.Models.Task task)
@@ -21,11 +28,11 @@ namespace TaskManager.Application.Services
             return await _taskRepositories.Create(task);
         }
 
-        public async Task<Guid> UpdateTask(Guid id, string title, string tittle,
-                                           string description, DateTime deadline, bool taskStatus)
+        public async Task<Guid> UpdateTask(Guid id, string title, string description,
+                                           DateTime deadline, bool taskStatus)
         {
-            return await _taskRepositories.Update(id, title, tittle,
-                                                  description, deadline, taskStatus);
+            return await _taskRepositories.Update(id, title,description,
+                                                  deadline, taskStatus);
         }
 
         public async Task<Guid> DeleteTask(Guid id)
