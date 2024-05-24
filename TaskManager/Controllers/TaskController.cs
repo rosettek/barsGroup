@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TaskManager.Application.Services;
 using TaskManager.Contracts;
 
@@ -17,6 +18,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTasks()
         {
             var tasks = await _tasksService.GetAllTasks();
@@ -28,6 +30,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTask(Guid id)
         {
             var task = await _tasksService.GetTask(id);
@@ -39,6 +42,8 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(NotFoundResult), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> CreatTaske([FromBody] CreateTaskRequest request)
         {
             var (task, error) = Domain.Models.Task
@@ -56,6 +61,8 @@ namespace TaskManager.Controllers
         }
 
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(NotFoundResult), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> UpdateTaske(Guid id, [FromBody] UpdateTaskResponse request)
         {
             if (request.CheckRequest())
@@ -70,6 +77,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<Guid>> DeleteTaske(Guid id)
         {
             Guid taskId = await _tasksService.DeleteTask(id);
