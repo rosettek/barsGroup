@@ -5,6 +5,7 @@
         Task<Guid> CreateTask(Domain.Models.Task task);
         Task<Guid> DeleteTask(Guid id);
         Task<List<Domain.Models.Task>> GetAllTasks();
-        Task<Guid> UpdateTask(Guid id, string title, string tittle, string description, DateTime deadline, bool taskStatus);
+        Task<List<Domain.Models.Task>> GetTask(Guid id);
+        Task<Guid> UpdateTask(Guid id, string title, string description, DateTime deadline, bool taskStatus);
     }
 }

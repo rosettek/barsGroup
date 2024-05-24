@@ -17,12 +17,6 @@ namespace TaskManager.DataAccess.Configurathions
             builder.Property(b => b.Description)
                 .HasMaxLength(Domain.Models.Task.MAX_DESCRIPTION_LENGHT)
                 .IsRequired();
-
-            //builder.Property(b => b.Deadline);
-
-            //builder.Property(b => b.CreateDate);
-
-            //builder.Property(b => b.TaskStatus).HasConversion;
         }
     }
 }
