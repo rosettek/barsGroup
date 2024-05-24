@@ -5,7 +5,6 @@
                                   string Description,
                                   DateTime Deadline,
                                   DateTime CreateDate,
-                                  bool TaskStatus,
-                                  bool IsDeleted);
+                                  bool TaskStatus);
 
 }
