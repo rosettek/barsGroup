@@ -12,7 +12,7 @@ using TaskManager.DataAccess;
 namespace TaskManager.DataAccess.Migrations
 {
     [DbContext(typeof(TaskManagerDbContext))]
-    [Migration("20240523161558_init")]
+    [Migration("20240524195043_init")]
     partial class init
     {
         /// <inheritdoc />
