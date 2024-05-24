@@ -1,6 +1,4 @@
-﻿using Docker.DotNet.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.Services;
 using TaskManager.Contracts;
 
@@ -9,7 +7,7 @@ namespace TaskManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TaskController: ControllerBase
+    public class TaskController : ControllerBase
     {
         private readonly ITasksService _tasksService;
 
@@ -25,7 +23,18 @@ namespace TaskManager.Controllers
 
             var response = tasks
                 .Select(b => new GetTasksResponse(b.Id, b.Title, b.Description,
-                                                 b.Deadline, b.CreateDate, b.TaskStatus,  b.IsDeleted));
+                                                 b.Deadline, b.CreateDate, b.TaskStatus));
+            return Ok(response);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<List<GetTasksResponse>>> GetTask(Guid id)
+        {
+            var task = await _tasksService.GetTask(id);
+
+            var response = task
+                .Select(b => new GetTasksResponse(b.Id, b.Title, b.Description,
+                                                 b.Deadline, b.CreateDate, b.TaskStatus));
             return Ok(response);
         }
 
@@ -33,44 +42,39 @@ namespace TaskManager.Controllers
         public async Task<ActionResult<Guid>> CreatTaske([FromBody] CreateTaskRequest request)
         {
             var (task, error) = Domain.Models.Task
-                .Create(Guid.NewGuid(),
-                        request.Title, request.Description, request.Deadline,
-                        request.CreateDate, request.TaskStatus, request.IsDeleted);
+                .Create(Guid.NewGuid(), request.Title, request.Description,
+                        request.Deadline, DateTime.UtcNow, true, false);
 
-            if(!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error))
             {
                 return BadRequest(error);
             }
-            
+
             Guid taskId = await _tasksService.CreateTask(task);
 
             return Ok(taskId);
         }
 
-        //private readonly TaskDbContext _dbContext;
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<Guid>> UpdateTaske(Guid id, [FromBody] UpdateTaskResponse request)
+        {
+            if (request.CheckRequest())
+            {
+                return BadRequest();
+            }
 
-        //public TaskController(TaskDbContext dbContext) 
-        //{
-        //    _dbContext = dbContext;
-        //}
+            Guid taskId = await _tasksService.UpdateTask(id, request.Title, request.Description,
+                                                         request.Deadline, request.TaskStatus);
 
-        //[HttpGet]
-        //public async Task<IAsyncResult> Get()
-        //{
-        //    var taskDtos = await _dbContext.TaskSet
-        //        .Select(n => new TaskDto( n.Name, n.Description, n.Deadline))
-        //        .ToListAsync();
-        //    return (IAsyncResult)Ok(new GetTaskResponse(taskDtos));
-        //}
+            return Ok(taskId);
+        }
 
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<Guid>> DeleteTaske(Guid id)
+        {
+            Guid taskId = await _tasksService.DeleteTask(id);
 
-        //[HttpPost]
-        //public async Task<IAsyncResult> Create([FromBody] CreateTaskRequest request)
-        //{
-        //    var task = new Tasks(request.Title, request.Description, request.Deadline);
-        //    await _dbContext.TaskSet.AddAsync(task);
-        //    await _dbContext.SaveChangesAsync();
-        //    return (IAsyncResult)Ok();
-        //}
+            return Ok(taskId);
+        }
     }
 }
