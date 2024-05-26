@@ -35,9 +35,16 @@ namespace TaskManager.Application.Services
                                                   deadline, taskStatus);
         }
 
-        public async Task<Guid> DeleteTask(Guid id)
+        public async Task<bool> DeleteTask(Guid id)
         {
-            return await _taskRepositories.Delete(id);
+            var tmp = await GetTask(id);
+
+            if (tmp.Count == 0)
+                return false;
+
+            await _taskRepositories.Delete(id);
+
+            return true;
         }
     }
 }
