@@ -43,6 +43,7 @@ namespace TaskManager.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BadRequestResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(NotFoundResult), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> CreatTaske([FromBody] CreateTaskRequest request)
         {
@@ -62,6 +63,7 @@ namespace TaskManager.Controllers
 
         [HttpPut("{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BadRequestResult), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(NotFoundResult), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> UpdateTaske(Guid id, [FromBody] UpdateTaskResponse request)
         {
