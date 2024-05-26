@@ -71,6 +71,7 @@ namespace TaskManager.Controllers
 
         [HttpPut("{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(UpdateTaskResponse), (int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<Guid>> UpdateTaske(Guid id, [FromBody] UpdateTaskResponse request)
         {
@@ -79,23 +80,22 @@ namespace TaskManager.Controllers
                 return BadRequest();
             }
 
-            Guid taskId = await _tasksService.UpdateTask(id, request.Title, request.Description,
-                                                         request.Deadline, request.TaskStatus);
-
-            return Ok(taskId);
+            if (!await _tasksService.UpdateTask(id, request.Title, request.Description,
+                                                         request.Deadline, request.TaskStatus))
+                return NotFound(id);
+            
+            return Ok(id);
         }
 
         [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> DeleteTaske(Guid id)
         {
-            bool isDeleted = await _tasksService.DeleteTask(id);
+            if (await _tasksService.DeleteTask(id))
+                return NotFound(id);
 
-            if (isDeleted)
-                return Ok(id);
-
-            return BadRequest(id);
+            return Ok(id);
         }
     }
 }
