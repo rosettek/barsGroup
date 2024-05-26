@@ -31,7 +31,6 @@ namespace TaskManager.DataAccess.Repositories
             return tasks;
         }
 
-
         public async Task<List<Domain.Models.Task>> Get(Guid id)
         {
             var taskEntity = await _context.Tasks
@@ -94,6 +93,17 @@ namespace TaskManager.DataAccess.Repositories
                 .SetProperty(b => b.IsDeleted, b => true));
 
             return id;
+        }
+
+        public async Task<bool> Check(Guid id)
+        {
+            var task = await _context.Tasks
+                .Where(b => b.Id == id)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return task.Count != 0 && !task.Where(task => task.Id == id)
+                                           .Any(task => task.IsDeleted == true);
         }
     }
 }

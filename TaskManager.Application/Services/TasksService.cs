@@ -28,23 +28,20 @@ namespace TaskManager.Application.Services
             return await _taskRepositories.Create(task);
         }
 
-        public async Task<Guid> UpdateTask(Guid id, string title, string description,
+        public async Task<bool> UpdateTask(Guid id, string title, string description,
                                            DateTime deadline, bool taskStatus)
         {
-            return await _taskRepositories.Update(id, title,description,
+            await _taskRepositories.Update(id, title, description,
                                                   deadline, taskStatus);
+
+            return await _taskRepositories.Check(id);
         }
 
         public async Task<bool> DeleteTask(Guid id)
         {
-            var tmp = await GetTask(id);
-
-            if (tmp.Count == 0)
-                return false;
-
             await _taskRepositories.Delete(id);
 
-            return true;
+            return await _taskRepositories.Check(id);
         }
     }
 }

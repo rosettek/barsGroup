@@ -6,6 +6,6 @@
         Task<bool> DeleteTask(Guid id);
         Task<List<Domain.Models.Task>> GetAllTasks();
         Task<List<Domain.Models.Task>> GetTask(Guid id);
-        Task<Guid> UpdateTask(Guid id, string title, string description, DateTime deadline, bool taskStatus);
+        Task<bool> UpdateTask(Guid id, string title, string description, DateTime deadline, bool taskStatus);
     }
 }
