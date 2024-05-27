@@ -8,7 +8,7 @@ using TaskManager.Contracts;
 namespace TaskManager.Controllers
 {
     [ApiController]
-    [Route("task")]
+    [Route("[controller]")]
     public class TaskController : ControllerBase
     {
         private readonly ITasksService _tasksService;
@@ -19,7 +19,6 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet]
-        [Route("get")]
         [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NoContentResult), (int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTasks()
@@ -35,8 +34,7 @@ namespace TaskManager.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
-        [Route("get/{id:guid}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NoContentResult), (int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTask(Guid id)
@@ -53,7 +51,6 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        [Route("post")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(CreateTaskRequest), (int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<Guid>> CreatTaske([FromBody] CreateTaskRequest request)
@@ -72,8 +69,7 @@ namespace TaskManager.Controllers
             return Ok(taskId);
         }
 
-        [HttpPut]
-        [Route("put/{id:guid}")]
+        [HttpPut("{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(UpdateTaskResponse), (int)HttpStatusCode.BadRequest)]
@@ -91,8 +87,7 @@ namespace TaskManager.Controllers
             return Ok(id);
         }
 
-        [HttpDelete]
-        [Route("deletet/{id:guid}")]
+        [HttpDelete("{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> DeleteTaske(Guid id)
