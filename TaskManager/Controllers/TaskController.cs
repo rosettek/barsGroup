@@ -8,17 +8,20 @@ using TaskManager.Contracts;
 namespace TaskManager.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("task")]
     public class TaskController : ControllerBase
     {
         private readonly ITasksService _tasksService;
+        private readonly ILogger<TaskController> _logger;
 
-        public TaskController(ITasksService tasksService)
+        public TaskController(ITasksService tasksService, ILogger<TaskController> logger)
         {
             _tasksService = tasksService;
+            _logger = _logger;
         }
 
         [HttpGet]
+        [Route("get")]
         [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NoContentResult), (int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTasks()
@@ -34,7 +37,8 @@ namespace TaskManager.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet]
+        [Route("get/{id:guid}")]
         [ProducesResponseType(typeof(List<GetTasksResponse>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(NoContentResult), (int)HttpStatusCode.NoContent)]
         public async Task<ActionResult<List<GetTasksResponse>>> GetTask(Guid id)
@@ -51,6 +55,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
+        [Route("post")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(CreateTaskRequest), (int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<Guid>> CreatTaske([FromBody] CreateTaskRequest request)
@@ -69,7 +74,8 @@ namespace TaskManager.Controllers
             return Ok(taskId);
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut]
+        [Route("put/{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(UpdateTaskResponse), (int)HttpStatusCode.BadRequest)]
@@ -83,11 +89,14 @@ namespace TaskManager.Controllers
             if (!await _tasksService.UpdateTask(id, request.Title, request.Description,
                                                          request.Deadline, request.TaskStatus))
                 return NotFound(id);
+
+
             
             return Ok(id);
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete]
+        [Route("delete/{id:guid}")]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         public async Task<ActionResult<Guid>> DeleteTaske(Guid id)
