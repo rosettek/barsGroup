@@ -30,9 +30,6 @@ namespace TaskManager
 
             var app = builder.Build();
 
-            //using var scope = app.Services.CreateScope();
-            // using var dbContext = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
-            // dbContext.Database.EnsureCreatedAsync();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -41,7 +38,7 @@ namespace TaskManager
                 app.UseSwaggerUI();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             //app.UseAuthorization();
 
