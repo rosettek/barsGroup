@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using TaskManager.DataAccess.Entities;
-using User.Domain.Models;
+using UserAuthentication.Domain.Models;
 
 namespace TaskManager.DataAccess.Configurathions
 {
