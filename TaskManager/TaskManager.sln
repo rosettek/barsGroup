@@ -5,11 +5,13 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager", "TaskManager.csproj", "{780542B5-9AB7-415A-91EB-67700530DBC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.DataAccess", "..\TaskManager.DataAccess\TaskManager.DataAccess.csproj", "{A206D2BB-116B-431B-A760-7DF00AC285C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.DataAccess", "..\TaskManager.DataAccess\TaskManager.DataAccess.csproj", "{A206D2BB-116B-431B-A760-7DF00AC285C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Domain", "..\TaskManager.Domain\TaskManager.Domain.csproj", "{B3E8710C-9927-4F77-9FFB-D26819F137BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.Domain", "..\TaskManager.Domain\TaskManager.Domain.csproj", "{B3E8710C-9927-4F77-9FFB-D26819F137BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Application", "..\TaskManager.Application\TaskManager.Application.csproj", "{D0498482-E2D5-44C4-B5F3-298580226830}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskManager.Application", "..\TaskManager.Application\TaskManager.Application.csproj", "{D0498482-E2D5-44C4-B5F3-298580226830}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Domain", "..\User.Domain\User.Domain.csproj", "{9D6CEC80-00E7-4766-B8B9-FAE95185C61E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D0498482-E2D5-44C4-B5F3-298580226830}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0498482-E2D5-44C4-B5F3-298580226830}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0498482-E2D5-44C4-B5F3-298580226830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D6CEC80-00E7-4766-B8B9-FAE95185C61E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D6CEC80-00E7-4766-B8B9-FAE95185C61E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D6CEC80-00E7-4766-B8B9-FAE95185C61E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D6CEC80-00E7-4766-B8B9-FAE95185C61E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
