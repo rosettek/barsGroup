@@ -1,4 +1,4 @@
-﻿namespace User.Domain.Models
+﻿namespace UserAuthentication.Domain.Models
 {
     public class User
     {
