@@ -1,4 +1,4 @@
-﻿using TaskManager.DataAccess.Repositories;
+﻿using TaskManager.Domain.Abstractions;
 
 namespace TaskManager.Application.Services
 {
