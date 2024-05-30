@@ -17,6 +17,11 @@ namespace TaskManager.DataAccess.Configurathions
             builder.Property(b => b.Description)
                 .HasMaxLength(Domain.Models.Task.MAX_DESCRIPTION_LENGHT)
                 .IsRequired();
+
+            builder
+                .HasOne(u => u.User)
+                .WithMany(t => t.Tasks)
+                .HasForeignKey(u => u.User);
         }
     }
 }

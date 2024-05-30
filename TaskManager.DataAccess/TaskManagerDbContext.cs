@@ -13,10 +13,10 @@ namespace TaskManager.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TaskConfiguration());
-            //modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
         }
 
         public DbSet<TaskEntity> Tasks { get; set; }
-        //public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
     }
 }

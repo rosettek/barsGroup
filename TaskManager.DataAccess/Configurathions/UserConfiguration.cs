@@ -9,7 +9,8 @@ namespace TaskManager.DataAccess.Configurathions
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
-            builder.HasKey(x => x.User_id);
+            builder.HasKey(x => x.Id);
+
             builder.Property(b => b.Name)
                 .HasMaxLength(User.MAX_NAME_LENGHT)
                 .IsRequired();
@@ -20,6 +21,11 @@ namespace TaskManager.DataAccess.Configurathions
 
             builder.Property(b => b.PasswordHash)
                 .IsRequired();
+
+            builder
+                .HasMany(u => u.Tasks)
+                .WithOne(t => t.User)
+                .HasForeignKey(l => l.UserID);
 
         }
     }
