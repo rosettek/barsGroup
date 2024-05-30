@@ -17,7 +17,7 @@
         public bool IsDeleted { get; set; } = false;
 
         
-        public Guid UserID { get; set; }
+        public Guid UserId { get; set; }
 
         public UserEntity? User { get; set; }
     }

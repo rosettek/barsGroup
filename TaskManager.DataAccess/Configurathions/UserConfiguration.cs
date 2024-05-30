@@ -25,7 +25,11 @@ namespace TaskManager.DataAccess.Configurathions
             builder
                 .HasMany(u => u.Tasks)
                 .WithOne(t => t.User)
-                .HasForeignKey(l => l.UserID);
+                .HasForeignKey(l => l.UserId);
+
+            builder
+                .HasIndex(b => b.Email)
+                .IsUnique();
 
         }
     }
