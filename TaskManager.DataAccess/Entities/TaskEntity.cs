@@ -15,5 +15,10 @@
         public bool TaskStatus { get; set; } = true;
         
         public bool IsDeleted { get; set; } = false;
+
+        
+        public Guid UserID { get; set; }
+
+        public UserEntity? User { get; set; }
     }
 }
