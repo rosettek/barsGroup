@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TaskManager.Application.Services;
-using TaskManager.Contracts;
+using TaskManager.Domain.Abstractions;
+using TaskManager.Contracts.Task;
 
 
 namespace TaskManager.Controllers
