@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.DataAccess.Entities;
 using UserAuthentication.Domain.Models;
+using UserAuthentication.Domain.Abstractions;
 
 namespace TaskManager.DataAccess.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly TaskManagerDbContext _context;
 
@@ -45,21 +46,26 @@ namespace TaskManager.DataAccess.Repositories
             return userEntity.Id;
         }
 
-        public async Task<List<User>> GetByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
             var userEntity = await _context.Users
-                .Where(u => u.Email == email)
                 .AsNoTracking()
-                .ToListAsync();
+                .FirstOrDefaultAsync(u => u.Email == email);
+            //.Where(u => u.Email == email)
+            //.ToListAsync();
 
-            var users = userEntity.Select(b => User.Create(
-                b.Id,
-                b.Name,
-                b.Email,
-                b.PasswordHash
-                )).ToList();
+            //var users = userEntity.Select(b => User.Create(
+            //    b.Id,
+            //    b.Name,
+            //    b.Email,
+            //    b.PasswordHash
+            //    )).ToList();
 
-            return users;
+            User user = User.Create(userEntity.Id,
+                                    userEntity.Name,
+                                    userEntity.Email,
+                                    userEntity.PasswordHash);
+            return user;
         }
     }
 }

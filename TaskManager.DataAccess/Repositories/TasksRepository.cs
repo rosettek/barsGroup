@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManager.DataAccess.Entities;
+using TaskManager.Domain.Abstractions;
 
 namespace TaskManager.DataAccess.Repositories
 {
