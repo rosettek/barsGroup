@@ -6,15 +6,15 @@
         public const int MAX_EMAIL_LENGHT = 50;
 
         public int a = 4;
-        private User(Guid user_id, string name, string email, string passwordHash)
+        private User(Guid id, string name, string email, string passwordHash)
         {
-            User_id = user_id;
+            Id = id;
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
         }
 
-        public Guid User_id { get; }
+        public Guid Id { get; }
 
         public string Name { get; } = string.Empty;
 
@@ -22,9 +22,9 @@
 
         public string PasswordHash { get; } = string.Empty;
 
-        public static User Create(Guid user_id, string name, string email, string passwordHash)
+        public static User Create(Guid id, string name, string email, string passwordHash)
         {
-            return new User(user_id, name, email, passwordHash);
+            return new User(id, name, email, passwordHash);
         }
     }
 }
