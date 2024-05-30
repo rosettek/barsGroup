@@ -1,7 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Application.Services;
 using TaskManager.DataAccess;
+using TaskManager.Domain.Abstractions;
 using TaskManager.DataAccess.Repositories;
+using UserAuthentication.Domain.Abstaraction;
+using UserAuthentication.Domain.Abstractions;
+using UserAuthentication.Application.Services;
+using UserAuthentication.Inafrastructure;
 
 namespace TaskManager
 {
@@ -10,6 +15,8 @@ namespace TaskManager
         public static  void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 
             builder.Services.AddControllers();
 
@@ -27,6 +34,12 @@ namespace TaskManager
 
             builder.Services.AddScoped<ITasksService, TasksService>();
             builder.Services.AddScoped<ITasksRepository, TasksRepository>();
+
+            builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUserService, UserService>();
+
 
             var app = builder.Build();
 
