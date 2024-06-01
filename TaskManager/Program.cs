@@ -7,6 +7,10 @@ using UserAuthentication.Domain.Abstaraction;
 using UserAuthentication.Domain.Abstractions;
 using UserAuthentication.Application.Services;
 using UserAuthentication.Inafrastructure;
+using Microsoft.AspNetCore.Builder;
+using TaskManager.Extentions;
+using Microsoft.Extensions.Options;
+
 
 namespace TaskManager
 {
@@ -23,7 +27,6 @@ namespace TaskManager
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            //builder.Services.AddScoped<TaskDbContext>();
             builder.Services.AddDbContext<TaskManagerDbContext>(
                 options =>
                 {
@@ -41,10 +44,13 @@ namespace TaskManager
             builder.Services.AddScoped<IUserService, UserService>();
 
 
+            builder.Services.AddApiAuthentication(builder.Configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>());
+
+
+
             var app = builder.Build();
 
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -53,8 +59,15 @@ namespace TaskManager
 
             app.UseHttpsRedirection();
 
-            //app.UseAuthorization();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = Microsoft.AspNetCore.CookiePolicy.HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 
