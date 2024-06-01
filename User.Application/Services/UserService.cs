@@ -19,13 +19,15 @@ namespace UserAuthentication.Application.Services
             _jwtProvider = jwtProvider;
         }
 
-        public async Task Register(string username, string email, string password)
+        public async Task<Guid> Register(string username, string email, string password)
         {
             var hashedPassword = _passwordHasher.Generate(password);
 
             var user = User.Create(Guid.NewGuid(), username, email, hashedPassword);
 
             await _userRepository.Add(user);
+
+            return user.Id;
         }
 
         public async Task<List<User>> GetAllUser()
@@ -41,7 +43,6 @@ namespace UserAuthentication.Application.Services
 
             if (result == false)
             {
-                return "пошел нахуй";
                 throw new Exception("Failed to login");
             }
 
