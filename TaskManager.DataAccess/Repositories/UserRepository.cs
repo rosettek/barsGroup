@@ -51,15 +51,11 @@ namespace TaskManager.DataAccess.Repositories
             var userEntity = await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Email == email);
-            //.Where(u => u.Email == email)
-            //.ToListAsync();
 
-            //var users = userEntity.Select(b => User.Create(
-            //    b.Id,
-            //    b.Name,
-            //    b.Email,
-            //    b.PasswordHash
-            //    )).ToList();
+            if (userEntity == null)
+            {
+                throw new Exception("попа младенца ");
+            }
 
             User user = User.Create(userEntity.Id,
                                     userEntity.Name,
